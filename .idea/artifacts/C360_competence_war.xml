@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="C360_competence:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="C360_competence.war">
-      <element id="artifact" artifact-name="C360_competence:war exploded" />
-    </root>
-  </artifact>
-</component>
