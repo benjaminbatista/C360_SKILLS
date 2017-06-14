@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -145,11 +144,17 @@ public class Collaborator extends BaseEntity {
     }
 
     public void addLink(Skill link) {
-        this.links.add(link);
+        if (this.links.indexOf(link) == -1) {
+            this.links.add(link);
+            link.addCollaborator(this);
+        }
     }
 
     public void removeLink(Skill link) {
-        this.links.remove(link);
+        if (this.links.indexOf(link) != -1) {
+            this.links.remove(link);
+            link.removeCollaborator(this);
+        }
     }
 
     public void setLinks(List<Skill> links) {

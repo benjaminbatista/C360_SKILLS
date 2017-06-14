@@ -44,12 +44,27 @@ public class Skill extends BaseEntity {
         return links;
     }
 
-    public void addLink(Skill link) {
-        this.links.add(link);
+
+    public void addSkill(Skill skill) {
+        if (this.links.indexOf(skill) == -1) {
+            this.links.add(skill);
+            skill.simpleAdd(this);
+        }
     }
 
-    public void removeLink(Skill link) {
-        this.links.remove(link);
+    public void removeSkill(Skill skill) {
+        if (this.links.indexOf(skill) != -1) {
+            this.links.remove(skill);
+            skill.simpleRemove(this);
+        }
+    }
+
+    public void simpleAdd(Skill skill) {
+        this.links.add(skill);
+    }
+
+    public void simpleRemove(Skill skill) {
+        this.links.remove(skill);
     }
 
     public List<Collaborator> getCollaborators() {
