@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by HBO3676 on 15/06/2017.
  */
+@RestController
 public class SkillWS {
     @Inject
     SkillDAO skillDAO;
@@ -45,6 +46,19 @@ public class SkillWS {
     public SkillDescription addLink(@RequestBody SkillDescription skillDescription, @RequestParam SkillDescription link){
         try {
             Skill skill = skillDAO.addLink(new DescriptionToSkill().convert(skillDescription),new DescriptionToSkill().convert(link));
+            return new SkillToDescription().convert(skill);
+        } catch (PersistenceException pe) {
+            UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
+            if (uniqueFieldErrors == null) throw new C360Exception(pe);
+            else throw new UniqueFieldException(uniqueFieldErrors.getField());
+        }
+    }
+
+    @RequestMapping(value = "${endpoint.removelink}", method = RequestMethod.POST)
+    @ResponseBody
+    public SkillDescription removeLink(@RequestBody SkillDescription skillDescription, @RequestParam SkillDescription link){
+        try {
+            Skill skill = skillDAO.removeLink(new DescriptionToSkill().convert(skillDescription),new DescriptionToSkill().convert(link));
             return new SkillToDescription().convert(skill);
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);

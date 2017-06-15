@@ -2,6 +2,8 @@ package com.viseo.c360.competence.domain.skill;
 
 import com.viseo.c360.competence.domain.BaseEntity;
 import com.viseo.c360.competence.domain.collaborator.Collaborator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;

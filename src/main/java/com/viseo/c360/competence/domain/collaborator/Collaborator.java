@@ -3,6 +3,8 @@ package com.viseo.c360.competence.domain.collaborator;
 import com.viseo.c360.competence.domain.BaseEntity;
 import com.viseo.c360.competence.domain.skill.Skill;
 import com.viseo.c360.competence.dto.collaborator.CollaboratorDescription;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Column;

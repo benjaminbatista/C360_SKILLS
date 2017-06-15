@@ -5,6 +5,7 @@
       <line x1="300" y1="50" :x2="lineBAX" :y2="lineBAY" style="stroke:black;stroke-width:2;" />
       <circle id="a" @click="checkLineA" cx="50" cy="50" r="50" fill="#09aa76" stroke="#075338" stroke-width="2"></circle>
       <circle id="b" @click="checkLineB" cx="300" cy="50" r="50" fill="#09aa76" stroke="#075338" stroke-width="2"></circle>
+
     </svg>
   </div>
 </template>
@@ -17,11 +18,13 @@ export default {
       lineBAY:'',
       lineABY:'',
       lineBAX:'',
-      lineABX:''
+      lineABX:'',
+      skills:{}
 
     }
   },
   mounted(){
+      this.getSkills();
       this.checkLineA();
       this.checkLineB();
   },
@@ -35,6 +38,16 @@ export default {
         this.lineBAY = document.getElementById('a').getAttribute('cy');
         this.lineBAX = document.getElementById('a').getAttribute('cx')
 
+    },
+    getSkills(){
+      this.$http.get('api/skills').then(response => {
+
+        // get body data
+        this.skills = response.body;
+
+      }, response => {
+          console.log(response);
+      });
     }
   }
 }
