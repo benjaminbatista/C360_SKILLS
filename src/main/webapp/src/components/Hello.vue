@@ -52,7 +52,7 @@ export default {
     },
     addSkill(){
       var skill = {"label":"heheho"}
-      this.$http.post('http://localhost:8081/api/addskill/',skill).then(response => {
+      this.$http.post('http://localhost:8083/api/addskill/',skill).then(response => {
 
         // get body data
         this.skills = response.body;
