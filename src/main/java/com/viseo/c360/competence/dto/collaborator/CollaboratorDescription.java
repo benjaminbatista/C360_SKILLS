@@ -23,7 +23,6 @@ public class CollaboratorDescription extends BaseDTO {
     String function;
     String businessUnit;
     Boolean defaultPicture;
-    List<SkillDescription> links;
 
     public CollaboratorDescription() {
         this.isAdmin = false;
@@ -109,11 +108,5 @@ public class CollaboratorDescription extends BaseDTO {
         this.defaultPicture = defaultPicture;
     }
 
-    public List<SkillDescription> getLinks() {
-        return links;
-    }
 
-    public void setLinks(List<SkillDescription> links) {
-        this.links = links;
-    }
 }

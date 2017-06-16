@@ -25,7 +25,6 @@ public class CollaboratorToDescription {
         dto.setFunction(source.getFunction());
         dto.setBusinessUnit(source.getBusinessUnit());
         dto.setDefaultPicture(source.getDefaultPicture());
-        dto.setLinks(new SkillToDescription().convert(source.getLinks()));
         return dto;
     }
 

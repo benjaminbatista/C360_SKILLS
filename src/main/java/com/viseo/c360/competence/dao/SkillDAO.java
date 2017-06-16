@@ -24,14 +24,22 @@ public class SkillDAO {
         daoFacade.flush();
         return skill;
     }
+    @Transactional
+    public Skill getSkillById(long id) throws PersistenceException{
+        Skill skill = daoFacade.find(Skill.class,id);
+        return skill;
+    }
 
     @Transactional
     public Skill addLink(Skill skill, Skill link) throws PersistenceException {
         skill = daoFacade.merge(skill);
         link = daoFacade.merge(link);
-        skill.addLink(link);
-        daoFacade.flush();
-        return skill;
+        if(skill.addLink(link)) {
+            daoFacade.flush();
+            return skill;
+        }
+        else
+            return null;
     }
     @Transactional
     public Skill removeLink(Skill skill, Skill link) throws PersistenceException {

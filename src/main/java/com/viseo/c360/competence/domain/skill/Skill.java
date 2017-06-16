@@ -46,8 +46,13 @@ public class Skill extends BaseEntity {
         return links;
     }
 
-    public void addLink(Skill link) {
+    public Boolean addLink(Skill link) {
+        if(!link.links.contains(this)){
         this.links.add(link);
+        return true;
+        }
+        else
+            return false;
     }
 
     public void removeLink(Skill link) {

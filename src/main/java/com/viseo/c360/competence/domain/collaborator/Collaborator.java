@@ -54,9 +54,6 @@ public class Collaborator extends BaseEntity {
     @NotNull
     Boolean defaultPicture;
 
-    @Valid
-    @ManyToMany(mappedBy = "collaborators")
-    List<Skill> links;
 
     public Collaborator() {
         super();
@@ -142,19 +139,4 @@ public class Collaborator extends BaseEntity {
         this.defaultPicture = defaultPicture;
     }
 
-    public List<Skill> getLinks() {
-        return links;
-    }
-
-    public void addLink(Skill link) {
-        this.links.add(link);
-    }
-
-    public void removeLink(Skill link) {
-        this.links.remove(link);
-    }
-
-    public void setLinks(List<Skill> links) {
-        this.links = links;
-    }
 }

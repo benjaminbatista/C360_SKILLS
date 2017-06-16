@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,72 +28,74 @@ public class SkillWS {
     @Inject
     ExceptionUtil exceptionUtil;
 
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.addskill}", method = RequestMethod.POST)
     @ResponseBody
-    public SkillDescription addSkill(@RequestBody SkillDescription skillDescription){
+    public Boolean addSkill(@RequestBody SkillDescription skillDescription){
         try {
-            Skill skill = skillDAO.addSkill(new DescriptionToSkill().convert(skillDescription));
-            return new SkillToDescription().convert(skill);
+            skillDescription.setLinks(new ArrayList<>());
+            skillDescription.setCollaborators(new ArrayList<>());
+            skillDAO.addSkill(new DescriptionToSkill().convert(skillDescription));
+            return true;
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
             if (uniqueFieldErrors == null) throw new C360Exception(pe);
             else throw new UniqueFieldException(uniqueFieldErrors.getField());
         }
     }
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.addlink}", method = RequestMethod.POST)
     @ResponseBody
-    public SkillDescription addLink(@RequestBody SkillDescription skillDescription, @RequestParam SkillDescription link){
+    public Boolean addLink(@RequestBody SkillDescription skillDescription, @PathVariable Long link){
         try {
-            Skill skill = skillDAO.addLink(new DescriptionToSkill().convert(skillDescription),new DescriptionToSkill().convert(link));
-            return new SkillToDescription().convert(skill);
+            skillDAO.addLink(new DescriptionToSkill().convert(skillDescription),skillDAO.getSkillById(link));
+            return true;
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
             if (uniqueFieldErrors == null) throw new C360Exception(pe);
             else throw new UniqueFieldException(uniqueFieldErrors.getField());
         }
     }
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.removelink}", method = RequestMethod.POST)
     @ResponseBody
-    public SkillDescription removeLink(@RequestBody SkillDescription skillDescription, @RequestParam SkillDescription link){
+    public Boolean removeLink(@RequestBody SkillDescription skillDescription, @RequestParam SkillDescription link){
         try {
-            Skill skill = skillDAO.removeLink(new DescriptionToSkill().convert(skillDescription),new DescriptionToSkill().convert(link));
-            return new SkillToDescription().convert(skill);
+            skillDAO.removeLink(new DescriptionToSkill().convert(skillDescription),new DescriptionToSkill().convert(link));
+            return true;
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
             if (uniqueFieldErrors == null) throw new C360Exception(pe);
             else throw new UniqueFieldException(uniqueFieldErrors.getField());
         }
     }
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.updateskill}", method = RequestMethod.PUT)
     @ResponseBody
-    public SkillDescription updateSkill(@RequestBody SkillDescription skillDescription){
+    public Boolean updateSkill(@RequestBody SkillDescription skillDescription){
         try {
-            Skill skill = skillDAO.updateSkill(new DescriptionToSkill().convert(skillDescription));
-            return new SkillToDescription().convert(skill);
+            skillDAO.updateSkill(new DescriptionToSkill().convert(skillDescription));
+            return true;
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
             if (uniqueFieldErrors == null) throw new C360Exception(pe);
             else throw new UniqueFieldException(uniqueFieldErrors.getField());
         }
     }
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.removeskill}", method = RequestMethod.POST)
     @ResponseBody
-    public SkillDescription removeSkill(@RequestBody SkillDescription skillDescription){
+    public Boolean removeSkill(@RequestBody SkillDescription skillDescription){
         try {
-            Skill skill = skillDAO.removeSkill(new DescriptionToSkill().convert(skillDescription));
-            return new SkillToDescription().convert(skill);
+            skillDAO.removeSkill(new DescriptionToSkill().convert(skillDescription));
+            return true;
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
             if (uniqueFieldErrors == null) throw new C360Exception(pe);
             else throw new UniqueFieldException(uniqueFieldErrors.getField());
         }
     }
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.skills}", method = RequestMethod.GET)
     @ResponseBody
     public List<SkillDescription> getAllSkills() {

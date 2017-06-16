@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted(){
-      this.getSkills();
+      this.addSkill();
       this.checkLineA();
       this.checkLineB();
   },
@@ -39,14 +39,26 @@ export default {
         this.lineBAX = document.getElementById('a').getAttribute('cx')
 
     },
-    getSkills(){
-      this.$http.get('api/skills').then(response => {
+    addLink(){
+        var skill =   {"id":2,"version":0,"label":"hoho","links":[],"collaborators":[]}
+      this.$http.post('http://localhost:8081/api/addlink/1',skill).then(response => {
 
         // get body data
         this.skills = response.body;
 
       }, response => {
           console.log(response);
+      });
+    },
+    addSkill(){
+      var skill = {"label":"heheho"}
+      this.$http.post('http://localhost:8081/api/addskill/',skill).then(response => {
+
+        // get body data
+        this.skills = response.body;
+
+      }, response => {
+        console.log(response);
       });
     }
   }

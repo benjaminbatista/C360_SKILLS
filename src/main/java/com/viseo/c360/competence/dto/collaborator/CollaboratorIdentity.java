@@ -10,7 +10,6 @@ public class CollaboratorIdentity extends BaseDTO {
     String firstName;
     String email;
     Boolean defaultPicture;
-    List<SkillDescription> links;
 
     public CollaboratorIdentity() {
     }
@@ -47,11 +46,4 @@ public class CollaboratorIdentity extends BaseDTO {
         this.defaultPicture = defaultPicture;
     }
 
-    public List<SkillDescription> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<SkillDescription> links) {
-        this.links = links;
-    }
 }
