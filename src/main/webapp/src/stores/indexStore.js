@@ -8,9 +8,10 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    testStore:{
-      name:'coucou'
-    }
+    cx:"",
+    cy:"",
+    cx1:"",
+    cy1:"",
   },
   actions: {
   },

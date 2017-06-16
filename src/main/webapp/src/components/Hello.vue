@@ -41,7 +41,7 @@ export default {
     },
     addLink(){
         var skill =   {"id":2,"version":0,"label":"hoho","links":[],"collaborators":[]}
-      this.$http.post('http://localhost:8081/api/addlink/1',skill).then(response => {
+      this.$http.post('http://localhost:8083/api/addlink/1',skill).then(response => {
 
         // get body data
         this.skills = response.body;
@@ -51,7 +51,7 @@ export default {
       });
     },
     addSkill(){
-      var skill = {"label":"heheho"}
+      var skill = {"label":this.label};
       this.$http.post('http://localhost:8083/api/addskill/',skill).then(response => {
 
         // get body data
