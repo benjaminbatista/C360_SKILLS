@@ -2,18 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
-import App from './App'
-import store from '@/stores/indexStore'
-import router from './router'
+import navigationMenu from './components/layout/navigationMenu.vue'
+require('../node_modules/bootstrap/dist/css/bootstrap.css');
 
-Vue.use(Vuex)
-Vue.config.productionTip = false
+
+Vue.use(Vuex);
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: { App }
+  template: '<navigation-menu></navigation-menu>',
+  components: { navigationMenu }
 })
