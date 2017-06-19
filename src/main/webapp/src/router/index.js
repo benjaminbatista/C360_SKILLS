@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
-import mainPage from '../mainPage.vue'
-import navigationMenu from '../components/layout/navigationMenu.vue'
+import mainPage from '../components/pages/mainPage.vue'
+import navigationMenu from '../components/layout/signInUpMenu.vue'
 
 Vue.use(VueResource);
 Vue.use(Router);

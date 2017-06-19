@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HeaderSkills from './components/HeaderComponent/HeaderSkills.vue'
+import HeaderSkills from '../layout/skillsHeader.vue'
 
   export default {
     components: { HeaderSkills: HeaderSkills},
