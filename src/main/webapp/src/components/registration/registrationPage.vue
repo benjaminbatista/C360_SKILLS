@@ -364,7 +364,7 @@
           }
         };
 
-        this.post("api/collaborateurs", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
+        this.post("http://localhost:8083/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
       },
 
       verifyUserToConnectByDatabase(){
@@ -384,7 +384,7 @@
           redirectDependingOnRole(userPersistedToken);
         };
 
-        this.post("api/user", this.userToConnect, connectUser);
+        this.post("http://localhost:8083/api/user", this.userToConnect, connectUser);
       },
 
       verifyForm (){
@@ -408,6 +408,26 @@
           this.collaboratorToRegister = JSON.parse(JSON.stringify(this.collaborator));
           this.saveAction();
         }
+      },
+      post: function(url,data,success,error){
+        if (!error) {
+          error = (response) => {
+            console.log("Error: ", response);
+            console.error(response);
+          }
+        }
+        this.$http.post(url, data)
+          .then(success, error);
+      },
+
+      get: function (url, success, error) {
+        this.$http.get(url)
+          .then(success, error);
+      },
+
+      put: function (url, data, success, error) {
+        this.$http.put(url,data)
+          .then(success, error);
       }
     }
   }

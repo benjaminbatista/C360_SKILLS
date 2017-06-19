@@ -50,7 +50,7 @@
 
     if (isTokenPresent) {
       let token = String(isTokenPresent.pop());
-      this.post('api/sendtoken', token, redirectToTrainingCollaborator);
+      this.post('http://localhost:8083/api/sendtoken', token, redirectToTrainingCollaborator);
     }
   },
 

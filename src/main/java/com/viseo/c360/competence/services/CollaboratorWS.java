@@ -41,7 +41,7 @@ public class CollaboratorWS {
     @Inject
     ExceptionUtil exceptionUtil;
 
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.user}", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, CollaboratorDescription> getUserByLoginPassword(@RequestBody CollaboratorDescription myCollaboratorDescription) {
@@ -77,7 +77,7 @@ public class CollaboratorWS {
     private void putUserInCache(String token, CollaboratorDescription user) {
         mapUserCache.put(token, user);
     }
-
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.getuserrole}", method = RequestMethod.POST)
     @ResponseBody
     public boolean checkIsAdminAlreadyConnected(@RequestBody String thisToken) {
@@ -89,6 +89,7 @@ public class CollaboratorWS {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.isconnected}", method = RequestMethod.POST)
     @ResponseBody
     public boolean checkIsAlreadyConnected(@RequestBody String thisToken) {
@@ -100,6 +101,7 @@ public class CollaboratorWS {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.userdisconnect}", method = RequestMethod.POST)
     @ResponseBody
     public Boolean deleteDisconnectedUserFromCache(@RequestBody String token) {
@@ -115,6 +117,7 @@ public class CollaboratorWS {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.collaborators}", method = RequestMethod.POST)
     @ResponseBody
     public CollaboratorDescription addCollaborator(@RequestBody CollaboratorDescription collaboratorDescription) {
@@ -129,6 +132,7 @@ public class CollaboratorWS {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.updatecollaborator}", method = RequestMethod.PUT)
     @ResponseBody
     public CollaboratorDescription updateCollaborator(@RequestBody CollaboratorDescription collaborator) {
@@ -142,6 +146,7 @@ public class CollaboratorWS {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.collaborators}", method = RequestMethod.GET)
     @ResponseBody
     public List<CollaboratorIdentity> getAllCollaborators() {
@@ -153,6 +158,7 @@ public class CollaboratorWS {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.collaboratorbyid}", method = RequestMethod.GET)
     @ResponseBody
     public CollaboratorDescription getCollaboratorById(@PathVariable Long collab_id) {
@@ -166,6 +172,7 @@ public class CollaboratorWS {
 
 
     //Update Collaborator Password
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.collaboratorspassword}", method = RequestMethod.PUT)
     @ResponseBody
     public CollaboratorDescription updateCollaboratorPassword(@PathVariable String collaboratorPassword, @PathVariable String collabId) {
@@ -180,6 +187,7 @@ public class CollaboratorWS {
     }
 
     //Send Collaborator Email
+    @CrossOrigin
     @RequestMapping(value = "${endpoint.collaboratorsemailpassword}", method = RequestMethod.POST)
     @ResponseBody
     public void sendCollaboratorEmail(@PathVariable String collaboratorId) {

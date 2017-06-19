@@ -155,11 +155,11 @@
           this.isErrorAuthentification = true;
         };
 
-        this.post("api/user", this.userToRegister, connectUserSuccess, connectUserError);
+        this.post("http://localhost:8083/api/user", this.userToRegister, connectUserSuccess, connectUserError);
       },
 
       gatherUsersFromDatabaseToVerify(){
-        this.$http.get("api/collaborateurs").then(
+        this.$http.get("http://localhost:8083/api/collaborateurs").then(
           function (response) {
             this.allUsers = response.data;
           },
@@ -173,7 +173,7 @@
             this.isErrorAuthentification = false;
             if (this.isNotNewEmail == true) {
               var self = this;
-              this.post("api/sendemail/" + this.idToSend);
+              this.post("http://localhost:8083/api/sendemail/" + this.idToSend);
               this.showPopup = true;
               setTimeout(function () {
                 self.showPopup = false;
@@ -184,7 +184,7 @@
       },
 
       sendInformationToCookie(){
-        this.$http.get("api/collaborateurs").then(
+        this.$http.get("http://localhost:8083/api/collaborateurs").then(
           function (response) {
             this.allUsers = response.data;
           },
