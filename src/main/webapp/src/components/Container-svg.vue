@@ -18,9 +18,9 @@
                         @click="selectSkill(skill)"/>
         </g>
         <g v-for="skill in skills">
-          <line v-for="link in skill.links"  :x1="getPositionXById(skill.id)" :y1="getPositionYById(skill.id)"
-                :x2="getPositionXById(link.id)"
-                :y2="getPositionYById(link.id)" style="stroke:rgb(255,0,0);stroke-width:2"/>
+          <line  v-for="link in skill.links" :x1="getPositionXById(skill.id)" :y1="getPositionYById(skill.id)"
+                  :x2="getPositionXById(link.id)"
+                  :y2="getPositionYById(link.id)" style="stroke:rgb(255,0,0);stroke-width:2"/>
         </g>
       </svg>
     </div>
@@ -44,25 +44,32 @@
         row: 0,
         x:'',
         y:'',
-        z:''
+        z:'',
       }
     },
     mounted(){
       this.getAllSkills();
     },
     methods: {
-      getPositionXById(id){
-        setTimeout(function(){
-          console.log(document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cx"))
-          return document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cx").toString();
-        }, 10);
-      },
-      getPositionYById(id){
-        setTimeout(function(){
-          console.log(document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cy"))
-          return document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cy").toString();
-        }, 10);
 
+      waitForElementToDisplay(selector, time, position){
+        let self = this;
+        if(document.getElementById(selector)!=null) {
+          return document.getElementById(selector).getElementsByTagName("circle")[0].getAttribute(position);
+        }
+        else {
+          setTimeout(function() {
+            self.waitForElementToDisplay(selector, time);
+          }, time);
+        }
+      },
+
+      getPositionXById(id){
+        return this.waitForElementToDisplay(id,0,"cx");
+      },
+
+      getPositionYById(id){
+       return this.waitForElementToDisplay(id,0,"cy");
       },
       selectSkill(skill){
         if (this.selectedSkill == '')
