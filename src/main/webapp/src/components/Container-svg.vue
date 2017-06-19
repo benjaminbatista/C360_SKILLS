@@ -1,7 +1,7 @@
-
 <template>
   <div>
-    <div class="header"><br><h1>Spike SVG</h1></div>
+    <div class="header"><br>
+      <h1>Spike SVG</h1></div>
     <form @submit.prevent="addCircle">
       <center>
         <div class="col-lg-2 col-md-2 col-md-offset-4 col-lg-offset-4">
@@ -14,7 +14,13 @@
     <div class="svg-content" id="test">
       <svg version="1.1" viewBox="0 0 1250 1250" preserveAspectRatio="xMinYMin meet">
         <g v-for="(skill,i) in skills">
-          <customCircle :cx="positionX(i)" :cy="positionY(i)" :content="skill.label" @click="selectSkill(skill)"/>
+          <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label"
+                        @click="selectSkill(skill)"/>
+        </g>
+        <g v-for="skill in skills">
+          <line v-for="link in skill.links"  :x1="getPositionXById(skill.id)" :y1="getPositionYById(skill.id)"
+                :x2="getPositionXById(link.id)"
+                :y2="getPositionYById(link.id)" style="stroke:rgb(255,0,0);stroke-width:2"/>
         </g>
       </svg>
     </div>
@@ -28,39 +34,53 @@
 //    name: 'container-svg',
     data () {
       return {
-        selectedSkill : '',
+        selectedSkill: '',
         skills: [],
         label: '',
         text: [],
         posX: 100,
         posY: 100,
         numberOfCircle: 0,
-        row: 0
+        row: 0,
+        x:'',
+        y:'',
+        z:''
       }
     },
     mounted(){
-        this.getAllSkills();
+      this.getAllSkills();
     },
     methods: {
-      selectSkill(skill){
-          if(this.selectedSkill == '')
-             this.selectedSkill = skill;
-          else
-          {
-            this.$http.post('http://localhost:8083/api/addlink/'+ skill.id,this.selectedSkill).then(response => {
-            }, response => {
-              console.log(response);
-            }).then(
-                function() {
-                  this.selectedSkill='';
-                  this.getAllSkills();
-                }
+      getPositionXById(id){
+        setTimeout(function(){
+          console.log(document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cx"))
+          return document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cx").toString();
+        }, 10);
+      },
+      getPositionYById(id){
+        setTimeout(function(){
+          console.log(document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cy"))
+          return document.getElementById(id).getElementsByTagName("circle")[0].getAttribute("cy").toString();
+        }, 10);
 
-            );
-          }
+      },
+      selectSkill(skill){
+        if (this.selectedSkill == '')
+          this.selectedSkill = skill;
+        else {
+          this.$http.post('http://localhost:8083/api/addlink/' + skill.id, this.selectedSkill).then(response => {
+          }, response => {
+            console.log(response);
+          }).then(
+            function () {
+              this.selectedSkill = '';
+              this.getAllSkills();
+            }
+          );
+        }
       },
       positionX(integ){
-        return this.posX + ((integ) % 8) * 150;
+        return this.posX + ((integ) % 8) * 150 + 50;
       },
       positionY(integ){
         return this.posY + Math.floor((integ) / 8) * 150;
@@ -74,7 +94,7 @@
       addSkill(){
         var skill = {"label": this.label};
         this.$http.post('http://localhost:8083/api/addskill/', skill).then(response => {
-            this.getAllSkills();
+          this.getAllSkills();
         }, response => {
           console.log(response);
         });
@@ -94,7 +114,7 @@
 
 <style>
 
-  svg-content{
+  svg-content {
     display: inline-block;
     position: relative;
     width: 100%;
@@ -103,30 +123,30 @@
     overflow: hidden;
   }
 
-  .defaultSize{
-    font-size:24px;
+  .defaultSize {
+    font-size: 24px;
   }
 
-  .smallSize{
-    font-size:17px;
+  .smallSize {
+    font-size: 17px;
   }
 
   body {
     color: #075338;
-    margin:0;
+    margin: 0;
     font-family: 'Lato', sans-serif;
   }
 
   h1 {
-    color:white;
+    color: white;
     text-align: center;
-    margin:0;
+    margin: 0;
   }
 
   .header {
     background-color: #09aa76;
-    height:80px;
-    margin:0px 0px 25px 0px;
+    height: 80px;
+    margin: 0px 0px 25px 0px;
   }
 
   .test {
@@ -134,7 +154,11 @@
   }
 
   @keyframes mymove {
-    from {opacity:0}
-    to {opacity: 1}
+    from {
+      opacity: 0
+    }
+    to {
+      opacity: 1
+    }
   }
 </style>
