@@ -60,11 +60,10 @@
           }
       },
       positionX(integ){
-        console.log(this.posX + ((integ - 1) % 8) * 150)
-        return this.posX + ((integ - 1) % 8) * 150;
+        return this.posX + ((integ) % 8) * 150;
       },
       positionY(integ){
-        return this.posY + Math.floor((integ - 1) / 8) * 150;
+        return this.posY + Math.floor((integ) / 8) * 150;
       },
       addCircle() {
         this.addSkill();
