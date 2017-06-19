@@ -87,7 +87,8 @@
         }
       },
       positionX(integ){
-        return this.posX + ((integ) % 8) * 150 + 50;
+          console.log()
+        return this.posX + ((integ) % 8) * 150;
       },
       positionY(integ){
         return this.posY + Math.floor((integ) / 8) * 150;
