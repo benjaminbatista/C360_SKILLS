@@ -3,15 +3,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import navigationMenu from './components/layout/navigationMenu.vue'
-require('../node_modules/bootstrap/dist/css/bootstrap.css');
+import HeaderSkills from './components/HeaderComponent/HeaderSkills.vue'
+import store from '@/stores/indexStore'
+import router from './router'
+import Dropdown from 'vue-js-dropdown'
+require('../node_modules/bootstrap/less/bootstrap.less')
 
+Vue.use(Vuex)
+Vue.use(Dropdown)
+Vue.component('headerSkills', require('./components/HeaderComponent/HeaderSkills.vue'));
 
-Vue.use(Vuex);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  template: '<navigation-menu></navigation-menu>',
-  components: { navigationMenu }
+  router,
+  store,
+  template: '<HeaderSkills></HeaderSkills><navigation-menu></navigation-menu>',
+  components: { HeaderSkills, navigationMenu }
 })
