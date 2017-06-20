@@ -25,7 +25,6 @@
         </g>
         <CloseCross :x1="linkPositionX()" :y1="linkPositionY()"></CloseCross>
       </svg>
-
     </div>
   </div>
 </template>
@@ -39,8 +38,8 @@
     data () {
       return {
         selectedSkill: {
-          skill1: '',
-          skill2: ''
+            skill1:'',
+            skill2:''
         },
         skills: [],
         selectedlink: '',
@@ -50,7 +49,7 @@
         posY: 100,
         numberOfCircle: 0,
         row: 0,
-        links: []
+        links:[]
       }
     },
     mounted(){
@@ -58,6 +57,15 @@
       this.getAllLinks();
     },
     methods: {
+      removeLink(link){
+        this.$http.post('http://localhost:8083/api/removelink', link).then(
+          response => {
+            console.log(response);
+            this.getAllLinks();
+          }, response => {
+            console.log(response);
+          })
+      },
       linkPositionX(){
         if (this.selectedlink != '') {
           var x1 = parseFloat(this.getPositionXById(this.selectedlink.skill1.id))-3;
@@ -87,22 +95,22 @@
 
       waitForElementToDisplay(selector, time, position){
         let self = this;
-        if (document.getElementById(selector) != null) {
+        if(document.getElementById(selector)!=null) {
           return document.getElementById(selector).getElementsByTagName("circle")[0].getAttribute(position);
         }
         else {
-          setTimeout(function () {
+          setTimeout(function() {
             self.waitForElementToDisplay(selector, time);
           }, time);
         }
       },
 
       getPositionXById(id){
-        return this.waitForElementToDisplay(id, 0, "cx");
+        return this.waitForElementToDisplay(id,0,"cx");
       },
 
       getPositionYById(id){
-        return this.waitForElementToDisplay(id, 0, "cy");
+       return this.waitForElementToDisplay(id,0,"cy");
       },
       selectSkill(skill){
         if (this.selectedSkill.skill1 == '')
@@ -110,15 +118,15 @@
         else {
           this.selectedSkill.skill2 = skill;
           this.$http.post('http://localhost:8083/api/addlink', this.selectedSkill).then(
-            response => {
-              console.log(response);
-            }, response => {
-              console.log(response);
-            }).then(
+          response => {
+                console.log(response);
+          }, response => {
+            console.log(response);
+          }).then(
             function () {
               this.selectedSkill = {
-                skill1: '',
-                skill2: ''
+                skill1:'',
+                skill2:''
               };
               this.getAllSkills();
               this.getAllLinks();
@@ -127,7 +135,7 @@
         }
       },
       positionX(integ){
-        console.log()
+          console.log()
         return this.posX + ((integ) % 8) * 150;
       },
       positionY(integ){
