@@ -10,5 +10,6 @@ import HeaderSkills from '../layout/skillsHeader.vue'
 
   export default {
     components: { HeaderSkills: HeaderSkills},
+
   }
 </script>

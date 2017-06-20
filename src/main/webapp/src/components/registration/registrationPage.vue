@@ -1,117 +1,122 @@
 <template>
 
-  <form id="registr-form" @submit.prevent="verifyForm">
-    <customInput
-      label="login"
-      labelText="Code de login"
-      icon="glyphicon-th"
-      type="text"
-      tab="1"
-      placeholder="ABC1234"
-      v-model="personnalIdNumber"
-      @focus="setLoginEmptyToFalse()"
-      @blur="isLoginEmpty"
-      maxlength="20" minlength="2"
-      :emptyField="loginEmpty"
-      :existField="personalIdNumberAlreadyExist"
-      existMessage="Ce code de login a déjà été enregistré"
-      :errorField="isErrorLogin()"
-      :errorMessage="errorMessageLogin">
-    </customInput>
-    <!-- NOM -->
-    <customInput
-      label="nom"
-      labelText="Nom"
-      icon="glyphicon-user"
-      type="text"
-      tab="2"
-      placeholder="DUPONT"
-      v-model="lastName"
-      @focus="setLastNameEmptyToFalse()"
-      @blur="isLastNameEmpty"
-      maxlength="125" minlength="2"
-      :emptyField="lastNameEmpty"
-      existField=""
-      :errorField="isErrorLastName()"
-      :errorMessage="errorMessageLastName">
-    </customInput>
-    <!-- PRENOM -->
-    <customInput
-      label="prenom"
-      labelText="Prénom"
-      icon="glyphicon-user"
-      type="text"
-      tab="2"
-      placeholder="Eric"
-      v-model="firstName"
-      @focus="setFirstNameEmptyToFalse()"
-      @blur="isFirstNameEmpty"
-      maxlength="125" minlength="2"
-      :emptyField="firstNameEmpty"
-      existField=""
-      :errorField="isErrorFirstName()"
-      :errorMessage="errorMessageFirstName">
-    </customInput>
-    <!-- EMAIL-->
-    <customInput
-      label="email"
-      labelText="Email"
-      icon="glyphicon-envelope"
-      type="text"
-      tab="2"
-      placeholder="eric.dupont@viseo.com"
-      v-model="email"
-      @focus="setEmailAlreadyExistToFalse()"
-      @blur="isEmailEmpty"
-      :emptyField="emailEmpty"
-      :existField="emailAlreadyExist"
-      existMessage="Cet email a déjà été enregistré."
-      :errorField="isErrorEmail()"
-      :errorMessage="errorMessageEmail">
-    </customInput>
-    <!-- MOT DE PASSE -->
-    <customPasswordInput
-      label="mdp"
-      labelText="Mot de passe"
-      v-model="password"
-      @focus="setPasswordEmptyToFalse()"
-      @blur="isPasswordEmpty"
-      :emptyField="passwordEmpty"
-      :errorField="isErrorPassword()"
-      :errorMessage="errorMessagePassword"
-      :show="showPass"
-      @click="toggleShowPassword">
-    </customPasswordInput>
-    <!-- CONFIRMATION MOT DE PASSE -->
-    <customPasswordInput
-      label="mdpc"
-      labelText="Confirmation mot de passe"
-      v-model="confirmPassword"
-      @focus="setConfirmPasswordEmptyToFalse()"
-      @blur="isConfirmPasswordEmpty"
-      :emptyField="confirmPasswordEmpty"
-      :errorField="isErrorConfirmPassword()"
-      :errorMessage="errorMessageConfirmPassword"
-      :show="showPassConf"
-      @click="toggleShowPasswordConfirmation">
-    </customPasswordInput>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-xs-12 col-xm-12 col-md-12 cold-lg-12 ">
-          <button type="submit" name="register-submit" id="register-submit"
-                  tabindex="4" class="form-control btn btn-primary">S'inscrire
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
+  <!--<form id="registr-form" @submit.prevent="verifyForm">-->
+    <!--<customInput-->
+      <!--label="login"-->
+      <!--labelText="Code de login"-->
+      <!--icon="glyphicon-th"-->
+      <!--type="text"-->
+      <!--tab="1"-->
+      <!--placeholder="ABC1234"-->
+      <!--v-model="personnalIdNumber"-->
+      <!--@focus="setLoginEmptyToFalse()"-->
+      <!--@blur="isLoginEmpty"-->
+      <!--maxlength="20" minlength="2"-->
+      <!--:emptyField="loginEmpty"-->
+      <!--:existField="personalIdNumberAlreadyExist"-->
+      <!--existMessage="Ce code de login a déjà été enregistré"-->
+      <!--:errorField="isErrorLogin()"-->
+      <!--:errorMessage="errorMessageLogin">-->
+    <!--</customInput>-->
+    <!--&lt;!&ndash; NOM &ndash;&gt;-->
+    <!--<customInput-->
+      <!--label="nom"-->
+      <!--labelText="Nom"-->
+      <!--icon="glyphicon-user"-->
+      <!--type="text"-->
+      <!--tab="2"-->
+      <!--placeholder="DUPONT"-->
+      <!--v-model="lastName"-->
+      <!--@focus="setLastNameEmptyToFalse()"-->
+      <!--@blur="isLastNameEmpty"-->
+      <!--maxlength="125" minlength="2"-->
+      <!--:emptyField="lastNameEmpty"-->
+      <!--existField=""-->
+      <!--:errorField="isErrorLastName()"-->
+      <!--:errorMessage="errorMessageLastName">-->
+    <!--</customInput>-->
+    <!--&lt;!&ndash; PRENOM &ndash;&gt;-->
+    <!--<customInput-->
+      <!--label="prenom"-->
+      <!--labelText="Prénom"-->
+      <!--icon="glyphicon-user"-->
+      <!--type="text"-->
+      <!--tab="2"-->
+      <!--placeholder="Eric"-->
+      <!--v-model="firstName"-->
+      <!--@focus="setFirstNameEmptyToFalse()"-->
+      <!--@blur="isFirstNameEmpty"-->
+      <!--maxlength="125" minlength="2"-->
+      <!--:emptyField="firstNameEmpty"-->
+      <!--existField=""-->
+      <!--:errorField="isErrorFirstName()"-->
+      <!--:errorMessage="errorMessageFirstName">-->
+    <!--</customInput>-->
+    <!--&lt;!&ndash; EMAIL&ndash;&gt;-->
+    <!--<customInput-->
+      <!--label="email"-->
+      <!--labelText="Email"-->
+      <!--icon="glyphicon-envelope"-->
+      <!--type="text"-->
+      <!--tab="2"-->
+      <!--placeholder="eric.dupont@viseo.com"-->
+      <!--v-model="email"-->
+      <!--@focus="setEmailAlreadyExistToFalse()"-->
+      <!--@blur="isEmailEmpty"-->
+      <!--:emptyField="emailEmpty"-->
+      <!--:existField="emailAlreadyExist"-->
+      <!--existMessage="Cet email a déjà été enregistré."-->
+      <!--:errorField="isErrorEmail()"-->
+      <!--:errorMessage="errorMessageEmail">-->
+    <!--</customInput>-->
+    <!--&lt;!&ndash; MOT DE PASSE &ndash;&gt;-->
+    <!--<customPasswordInput-->
+      <!--label="mdp"-->
+      <!--labelText="Mot de passe"-->
+      <!--v-model="password"-->
+      <!--@focus="setPasswordEmptyToFalse()"-->
+      <!--@blur="isPasswordEmpty"-->
+      <!--:emptyField="passwordEmpty"-->
+      <!--:errorField="isErrorPassword()"-->
+      <!--:errorMessage="errorMessagePassword"-->
+      <!--:show="showPass"-->
+      <!--@click="toggleShowPassword">-->
+    <!--</customPasswordInput>-->
+    <!--&lt;!&ndash; CONFIRMATION MOT DE PASSE &ndash;&gt;-->
+    <!--<customPasswordInput-->
+      <!--label="mdpc"-->
+      <!--labelText="Confirmation mot de passe"-->
+      <!--v-model="confirmPassword"-->
+      <!--@focus="setConfirmPasswordEmptyToFalse()"-->
+      <!--@blur="isConfirmPasswordEmpty"-->
+      <!--:emptyField="confirmPasswordEmpty"-->
+      <!--:errorField="isErrorConfirmPassword()"-->
+      <!--:errorMessage="errorMessageConfirmPassword"-->
+      <!--:show="showPassConf"-->
+      <!--@click="toggleShowPasswordConfirmation">-->
+    <!--</customPasswordInput>-->
+    <!--<div class="form-group">-->
+      <!--<div class="row">-->
+        <!--<div class="col-xs-12 col-xm-12 col-md-12 cold-lg-12 ">-->
+          <!--<button @click="addCollaborator()" type="submit" name="register-submit" id="register-submit"-->
+                  <!--tabindex="4" class="form-control btn btn-primary">S'inscrire-->
+          <!--</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</form>-->
+  <button type="button" class="button" @click="loadCollaborator()"> Get Collaborator </button>
+
 </template>
+
 
 <script>
   import customInput from '../customInput/customInput.vue'
   import passwordInput from '../customInput/passwordInput.vue'
+  import axios from 'axios'
 
   export default {
+
       name: 'inscription-form',
     components: { customInput: customInput, customPasswordInput: passwordInput },
     data() {
@@ -159,10 +164,14 @@
           isFirstNameValid: true,
           isEmailValid: true,
           isPasswordValid: true,
-          isConfirmPasswordValid: true
+          isConfirmPasswordValid: true,
+          errorMessage:''
         }
       },
+
     mounted: function () {
+      this.loadCollaborator();
+
     },
     watch: {
       personnalIdNumber: function (value) {
@@ -187,6 +196,18 @@
       }
     },
     methods: {
+          loadCollaborator: function (){
+            axios.get("http://localhost:8086/api/collaborateurs#/login")
+              .then(response => {
+                this.$store.commit('getCollaborator', response.data.collaborator)
+              }).catch(error => {
+              this.errorMessage = 'No user or no location'
+            })
+            console.log(this.$store.state.collaborator);
+
+
+          },
+
       isErrorLogin() {
         return !this.isLoginValid && !this.loginEmpty;
       },
@@ -334,35 +355,58 @@
         document.cookie = "stayconnected=true";
       },
 
-      saveAction() {
-        delete this.collaboratorToRegister['confirmPassword'];  //delete password confirmation
-//post the form to the server
-        let sendUserToRegisterSuccess = (response) => {
-          this.emailAlreadyExist = false;
-          this.personalIdNumberAlreadyExist = false;
-          this.user.email = this.collaborator.email;
-          this.user.password = this.collaborator.password;
-          this.userToConnect = JSON.parse(JSON.stringify(this.user));
-          this.verifyUserToConnectByDatabase();
-        };
+//      addCollaborator() {
+//        delete this.collaboratorToRegister['confirmPassword'];  //delete password confirmation
+////post the form to the server
+//        let sendUserToRegisterSuccess = (response) => {
+//          this.emailAlreadyExist = false;
+//          this.personalIdNumberAlreadyExist = false;
+//          this.user.email = this.collaborator.email;
+//          this.user.password = this.collaborator.password;
+//          this.userToConnect = JSON.parse(JSON.stringify(this.user));
+////          this.verifyUserToConnectByDatabase();
+//        };
+//
+//        let sendUserToRegisterError = (response) => {
+//          console.log("Error: ", response);
+//          if (response.data.message == "personnalIdNumber") {
+//            console.log("PID already exist");
+//            this.personalIdNumberAlreadyExist = true;
+//            this.emailAlreadyExist = false;
+//          }
+//          else if (response.data.message == "email") {
+//            console.log("email already exist");
+//            this.emailAlreadyExist = true;
+//            this.personalIdNumberAlreadyExist = false;
+//          } else {
+//            console.error(response);
+//            this.personalIdNumberAlreadyExist = true;
+//            this.emailAlreadyExist = true;
+//          }
+//        };
+//
+//        this.$store.dispatch('ADD_REGISTER_COLLABORATOR');
+//      },
 
-        let sendUserToRegisterError = (response) => {
-          console.log("Error: ", response);
-          if (response.data.message == "personnalIdNumber") {
-            console.log("PID already exist");
-            this.personalIdNumberAlreadyExist = true;
-            this.emailAlreadyExist = false;
-          }
-          else if (response.data.message == "email") {
-            console.log("email already exist");
-            this.emailAlreadyExist = true;
-            this.personalIdNumberAlreadyExist = false;
-          } else {
-            console.error(response);
-            this.personalIdNumberAlreadyExist = true;
-            this.emailAlreadyExist = true;
-          }
-        };
+//      verifyUserToConnectByDatabase(){
+//        let redirectDependingOnRole = (token) => {
+//          if (typeof token.data['userConnected'] != 'undefined') {
+//            if (jwt_decode(token.data['userConnected']).roles) {
+//              this.goTo('addTrainingTopic');
+//            }
+//            else {
+//              this.goTo('registerTrainingCollaborator');
+//            }
+//          }
+//        };
+//
+//        let connectUser = (userPersistedToken) => {
+//          this.handleCookie(userPersistedToken.data['userConnected']);
+//          redirectDependingOnRole(userPersistedToken);
+//        };
+//
+//        this.post("api/user", this.userToConnect, connectUser);
+//      },
 
         this.post(config.server+"/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
       },
@@ -406,7 +450,7 @@
           this.collaborator.password = this.password;
           this.collaborator.confirmPassword = this.confirmPassword;
           this.collaboratorToRegister = JSON.parse(JSON.stringify(this.collaborator));
-          this.saveAction();
+          this.addCollaborator();
         }
       },
       post: function(url,data,success,error){

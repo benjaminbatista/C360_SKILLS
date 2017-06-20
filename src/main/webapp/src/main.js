@@ -2,8 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VueResource from 'vue-resource'
-import store from '@/stores/indexStore'
+import store from './vuex/store'
 import router from './config/router.js'
 import Dropdown from 'vue-js-dropdown'
 import config from './config/config.js'
@@ -14,6 +13,20 @@ Vue.use(Vuex);
 Vue.use(Dropdown);
 Vue.use(VueResource);
 Vue.config.productionTip = false;
+
+// axios.defaults.baseURL = 'http://localhost:8080'
+//
+// axios.interceptors.response.use((response) => {
+//   return response
+// }, function (error) {
+//   // Do something with response error
+//   if (error.response.status === 401) {
+//     console.log('unauthorized, logging out ...')
+//     auth.logout()
+//     router.replace('/login')
+//   }
+//   return Promise.reject(error)
+// })
 
 /* eslint-disable no-new */
 new Vue({

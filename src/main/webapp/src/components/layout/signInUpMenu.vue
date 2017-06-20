@@ -245,4 +245,11 @@
   .tab-group li a:hover {
     background: rgb(151, 37, 61);
   }
+
+  #register-submit {
+    background: rgb(224,53,89);
+    border-color: rgb(224,53,89);
+
+  }
+
 </style>
