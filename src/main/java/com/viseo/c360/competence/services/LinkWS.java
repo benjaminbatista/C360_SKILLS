@@ -37,12 +37,13 @@ public class LinkWS {
     public Boolean addLink(@RequestBody LinkDescription linkDescription){
         try {
             List<Link> links = linkDAO.getAllLinks();
-            if(!links.contains(new DescriptionToLink().convert(linkDescription))){
-                linkDAO.addLink(new DescriptionToLink().convert(linkDescription));
-                return true;
-            }else{
-                return false;
+            for(int i=0; i < links.size(); i++){
+                if(links.get(i).getSkill1().getId() == linkDescription.getSkill1().getId() && links.get(i).getSkill2().getId() == linkDescription.getSkill2().getId()){
+                    return false;
+                }
             }
+            linkDAO.addLink(new DescriptionToLink().convert(linkDescription));
+            return true;
         } catch (PersistenceException pe) {
             UniqueFieldErrors uniqueFieldErrors = exceptionUtil.getUniqueFieldError(pe);
             if (uniqueFieldErrors == null) throw new C360Exception(pe);
