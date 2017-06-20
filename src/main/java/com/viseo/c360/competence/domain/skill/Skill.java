@@ -22,11 +22,6 @@ public class Skill extends BaseEntity {
 
     @Valid
     @ManyToMany
-    @JoinTable(name = "links")
-    List<Skill> links;
-
-    @Valid
-    @ManyToMany
     @JoinTable(name = "skill_owners")
     List<Collaborator> collaborators;
 
@@ -42,22 +37,6 @@ public class Skill extends BaseEntity {
         this.label = label;
     }
 
-    public List<Skill> getLinks() {
-        return links;
-    }
-
-    public Boolean addLink(Skill link) {
-        if(!link.links.contains(this)){
-        this.links.add(link);
-        return true;
-        }
-        else
-            return false;
-    }
-
-    public void removeLink(Skill link) {
-        this.links.remove(link);
-    }
 
     public List<Collaborator> getCollaborators() {
         return collaborators;
@@ -69,10 +48,6 @@ public class Skill extends BaseEntity {
 
     public void removeCollaborator(Collaborator collaborator) {
         this.collaborators.remove(collaborator);
-    }
-
-    public void setLinks(List<Skill> links) {
-        this.links = links;
     }
 
     public void setCollaborators(List<Collaborator> collaborators) {

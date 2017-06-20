@@ -18,7 +18,6 @@ public class DescriptionToSkill {
         domain.setVersion(dto.getVersion());
         domain.setLabel(dto.getLabel());
         domain.setCollaborators(new IdentityToCollaborator().convert(dto.getCollaborators()));
-        domain.setLinks(new DescriptionToSkill().convert(dto.getLinks()));
         return domain;
     }
 

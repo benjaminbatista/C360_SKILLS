@@ -30,25 +30,6 @@ public class SkillDAO {
         return skill;
     }
 
-    @Transactional
-    public Skill addLink(Skill skill, Skill link) throws PersistenceException {
-        skill = daoFacade.merge(skill);
-        link = daoFacade.merge(link);
-        if(skill.addLink(link)) {
-            daoFacade.flush();
-            return skill;
-        }
-        else
-            return null;
-    }
-    @Transactional
-    public Skill removeLink(Skill skill, Skill link) throws PersistenceException {
-        skill = daoFacade.merge(skill);
-        link = daoFacade.merge(link);
-        skill.removeLink(link);
-        daoFacade.flush();
-        return skill;
-    }
 
     @Transactional
     public Skill updateSkill(Skill skill) throws PersistenceException {
@@ -66,8 +47,7 @@ public class SkillDAO {
 
     @Transactional
     public List<Skill> getAllSkills() {
-        daoFacade.getList("select s from Skill s left outer join fetch s.collaborators");
-        return daoFacade.getList("select s from Skill s left outer join fetch s.links");
+        return daoFacade.getList("select s from Skill s left outer join fetch s.collaborators");
     }
 
 }

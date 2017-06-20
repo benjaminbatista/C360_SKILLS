@@ -13,14 +13,14 @@
 
     <div class="svg-content" id="test">
       <svg version="1.1" viewBox="0 0 1250 1250" preserveAspectRatio="xMinYMin meet">
+        <g v-for="link in links">
+          <line   :x1="getPositionXById(link.skill1.id)" :y1="getPositionYById(link.skill1.id)"
+                  :x2="getPositionXById(link.skill2.id)"
+                  :y2="getPositionYById(link.skill2.id)" style="stroke:black;stroke-width:2"/>
+        </g>
         <g v-for="(skill,i) in skills">
           <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label"
                         @click="selectSkill(skill)"/>
-        </g>
-        <g v-for="skill in skills">
-          <line  v-for="link in skill.links" :x1="getPositionXById(skill.id)" :y1="getPositionYById(skill.id)"
-                  :x2="getPositionXById(link.id)"
-                  :y2="getPositionYById(link.id)" style="stroke:rgb(255,0,0);stroke-width:2"/>
         </g>
       </svg>
     </div>
@@ -34,7 +34,10 @@
 //    name: 'container-svg',
     data () {
       return {
-        selectedSkill: '',
+        selectedSkill: {
+            skill1:'',
+            skill2:''
+        },
         skills: [],
         label: '',
         text: [],
@@ -42,13 +45,12 @@
         posY: 100,
         numberOfCircle: 0,
         row: 0,
-        x:'',
-        y:'',
-        z:'',
+        links:[]
       }
     },
     mounted(){
       this.getAllSkills();
+      this.getAllLinks();
     },
     methods: {
 
@@ -72,16 +74,23 @@
        return this.waitForElementToDisplay(id,0,"cy");
       },
       selectSkill(skill){
-        if (this.selectedSkill == '')
-          this.selectedSkill = skill;
+        if (this.selectedSkill.skill1 == '')
+          this.selectedSkill.skill1 = skill;
         else {
-          this.$http.post('http://localhost:8083/api/addlink/' + skill.id, this.selectedSkill).then(response => {
+          this.selectedSkill.skill2 = skill;
+          this.$http.post('http://localhost:8083/api/addlink', this.selectedSkill).then(
+          response => {
+                console.log(response);
           }, response => {
             console.log(response);
           }).then(
             function () {
-              this.selectedSkill = '';
+              this.selectedSkill = {
+                skill1:'',
+                skill2:''
+              };
               this.getAllSkills();
+              this.getAllLinks();
             }
           );
         }
@@ -110,6 +119,19 @@
       getAllSkills(){
         this.$http.get("http://localhost:8083/api/skills/").then(response => {
           this.skills = response.body;
+          this.skills.sort(function (a, b) {
+            return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);
+          });
+        }, response => {
+          console.log(response);
+        });
+      },
+      getAllLinks(){
+        this.$http.get("http://localhost:8083/api/links/").then(response => {
+          this.links = response.body;
+          this.links.sort(function (a, b) {
+            return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);
+          });
         }, response => {
           console.log(response);
         });
