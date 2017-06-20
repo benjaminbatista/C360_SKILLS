@@ -14,9 +14,12 @@
     <div class="svg-content" id="test">
       <svg version="1.1" viewBox="0 0 1250 1250" preserveAspectRatio="xMinYMin meet">
         <g v-for="link in links">
-          <line   :x1="getPositionXById(link.skill1.id)" :y1="getPositionYById(link.skill1.id)"
+          <line   @click="removeLink(link)"
+                  :x1="getPositionXById(link.skill1.id)"
+                  :y1="getPositionYById(link.skill1.id)"
                   :x2="getPositionXById(link.skill2.id)"
-                  :y2="getPositionYById(link.skill2.id)" style="stroke:black;stroke-width:2"/>
+                  :y2="getPositionYById(link.skill2.id)"
+                  style="stroke:black;stroke-width:2;"/>
         </g>
         <g v-for="(skill,i) in skills">
           <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label"
@@ -53,7 +56,15 @@
       this.getAllLinks();
     },
     methods: {
-
+      removeLink(link){
+        this.$http.post('http://localhost:8083/api/removelink', link).then(
+          response => {
+            console.log(response);
+            this.getAllLinks();
+          }, response => {
+            console.log(response);
+          })
+      },
       waitForElementToDisplay(selector, time, position){
         let self = this;
         if(document.getElementById(selector)!=null) {

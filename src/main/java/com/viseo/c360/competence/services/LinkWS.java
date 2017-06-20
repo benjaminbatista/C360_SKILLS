@@ -38,7 +38,7 @@ public class LinkWS {
         try {
             List<Link> links = linkDAO.getAllLinks();
             for(int i=0; i < links.size(); i++){
-                if(links.get(i).getSkill1().getId() == linkDescription.getSkill1().getId() && links.get(i).getSkill2().getId() == linkDescription.getSkill2().getId()){
+                if((links.get(i).getSkill1().getId() == linkDescription.getSkill1().getId() && links.get(i).getSkill2().getId() == linkDescription.getSkill2().getId()) || (links.get(i).getSkill1().getId() == linkDescription.getSkill2().getId() && links.get(i).getSkill2().getId() == linkDescription.getSkill1().getId())){
                     return false;
                 }
             }
