@@ -14,16 +14,16 @@
     <div class="svg-content" id="test">
       <svg version="1.1" viewBox="0 0 1250 1250" preserveAspectRatio="xMinYMin meet">
         <g v-for="link in links">
-          <line @mouseover="selectedlink = link" :x1="getPositionXById(link.skill1.id)"
+          <line  @mouseover="selectedlink = link;showCross = true;" :x1="getPositionXById(link.skill1.id)"
                 :y1="getPositionYById(link.skill1.id)"
                 :x2="getPositionXById(link.skill2.id)"
-                :y2="getPositionYById(link.skill2.id)" style="stroke:black;stroke-width:2"/>
+                :y2="getPositionYById(link.skill2.id)" style="stroke:black;stroke-width:3"/>
         </g>
         <g v-for="(skill,i) in skills">
           <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label"
                         @click="selectSkill(skill)"/>
         </g>
-        <CloseCross :x1="linkPositionX()" :y1="linkPositionY()"></CloseCross>
+        <CloseCross v-show="showCross" style="cursor: pointer;"@click="removeLink(selectedlink)":x1="linkPositionX()" :y1="linkPositionY()"></CloseCross>
       </svg>
     </div>
   </div>
@@ -44,6 +44,7 @@
         skills: [],
         selectedlink: '',
         label: '',
+        showCross : false,
         text: [],
         posX: 100,
         posY: 100,
@@ -166,8 +167,11 @@
         });
       },
       getAllLinks(){
+        this.showCross=false;
         this.$http.get("http://localhost:8083/api/links/").then(response => {
           this.links = response.body;
+          if(this.selectedlink=='')
+              this.showCross =false;
           this.links.sort(function (a, b) {
             return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);
           });

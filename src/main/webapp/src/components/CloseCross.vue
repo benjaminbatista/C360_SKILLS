@@ -1,6 +1,6 @@
 <template>
-  <g>
-    <line :x1="x1" :y1="y1+12"
+  <g @click="handleClick()">
+    <line  :x1="x1" :y1="y1+12"
           :x2="x1+12" :y2="y1"
           stroke="red"
           stroke-width="3"/>
@@ -19,7 +19,11 @@
     data () {
       return {}
     },
-    methods: {}
+    methods: {
+        handleClick(){
+            this.$emit('click');
+        }
+    }
   }
 
 </script>
