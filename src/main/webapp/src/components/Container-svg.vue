@@ -2,14 +2,6 @@
   <div>
     <div class="header"><br>
       <h1>Spike SVG</h1></div>
-    <form @submit.prevent="addCircle">
-      <center>
-        <div class="col-lg-2 col-md-2 col-md-offset-4 col-lg-offset-4">
-          <input class="form-control col-lg-3" type="text" v-model="label">
-        </div>
-        <button class="col-lg-1 col-md-1 btn btn-default">Ajouter !</button>
-      </center>
-    </form>
 
     <div class="svg-content" id="test">
       <svg version="1.1" viewBox="0 0 1250 1250" preserveAspectRatio="xMinYMin meet">
@@ -23,6 +15,16 @@
           <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label"
                         @click="selectSkill(skill)"/>
         </g>
+        <customCircle @click="newSkillClicked = true":cx="positionX(skills.length)" :cy="positionY(skills.length)" content="Nouvelle"/>
+        <foreignObject v-show="newSkillClicked" :x="positionX(skills.length) - 47" :y="positionY(skills.length)-5">
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <input style="width: 90px;text-align:center;" maxlength="10" type="text" v-model="label"/>
+          </div>
+        </foreignObject>
+        <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) - 30" :cy="positionY(skills.length) + 65" fill="red"></circle>
+        <text @click="newSkillClicked = false" text-anchor="middle" :x="positionX(skills.length) - 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">X</text>
+        <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) + 30" :cy="positionY(skills.length) + 65" fill="green"></circle>
+        <text @click="addCircle" text-anchor="middle" :x="positionX(skills.length) + 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">✔</text>
         <CloseCross v-show="showCross" style="cursor: pointer;"@click="removeLink(selectedlink)":x1="linkPositionX()" :y1="linkPositionY()"></CloseCross>
       </svg>
     </div>
@@ -44,6 +46,7 @@
         skills: [],
         selectedlink: '',
         label: '',
+        newSkillClicked:false,
         showCross : false,
         text: [],
         posX: 100,
@@ -71,10 +74,7 @@
         if (this.selectedlink != '') {
           var x1 = parseFloat(this.getPositionXById(this.selectedlink.skill1.id))-3;
           var x2 = parseInt(this.getPositionXById(this.selectedlink.skill2.id))-3;
-          console.log("x1= " +x1);
-          console.log("x2= "+x2);
           var total = (x1 + x2) / 2;
-          console.log(total);
           return total
         }
         else
@@ -84,10 +84,7 @@
         if (this.selectedlink != '') {
           var y1 = parseInt(this.getPositionYById(this.selectedlink.skill1.id)) - 3;
           var y2 = parseInt(this.getPositionYById(this.selectedlink.skill2.id)) - 3;
-          console.log("y1= " +y1);
-          console.log("y2= "+y2);
           var somme = y1+y2;
-          console.log(somme/2);
           return somme/2
         }
         else
@@ -143,10 +140,13 @@
         return this.posY + Math.floor((integ) / 8) * 150;
       },
       addCircle() {
-        this.addSkill();
-        this.text.push(this.text1);
-        this.numberOfCircle++;
-        this.label = "";
+        if(this.label != '') {
+          this.addSkill();
+          this.text.push(this.text1);
+          this.newSkillClicked = false;
+          this.numberOfCircle++;
+          this.label = "";
+        }
       },
       addSkill(){
         var skill = {"label": this.label};
