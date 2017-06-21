@@ -17,16 +17,16 @@
           <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label" stroke="red" fill="white"
                         @click="selectSkill(skill)"/>
         </g>
-        <customCircle @click="newSkillClicked = true":cx="positionX(skills.length)" :cy="positionY(skills.length)" content="Nouvelle" stroke="green" fill="white"/>
+        <customCircle @click="newSkillClicked = true;label=''":cx="positionX(skills.length)" :cy="positionY(skills.length)" :content="label" stroke="green" fill="white"/>
         <foreignObject v-show="newSkillClicked" :x="positionX(skills.length) - 46" :y="positionY(skills.length)-7">
           <div xmlns="http://www.w3.org/1999/xhtml">
             <form @submit.prevent="addCircle">
-            <input style="width: 88px;text-align:center; border-color: rgba(0,0,0,0.52);" maxlength="10" type="text" v-model="label"/>
+            <input @blur="newSkillClicked = false" style="width: 88px;text-align:center; border-color: rgba(0,0,0,0.52);" maxlength="10" type="text" v-model="label"/>
             </form>
           </div>
         </foreignObject>
         <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) - 30" :cy="positionY(skills.length) + 65" fill="orange"></circle>
-        <text @click="newSkillClicked = false" text-anchor="middle" :x="positionX(skills.length) - 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">X</text>
+        <text @click="newSkillClicked = false; label = 'Nouvelle'" text-anchor="middle" :x="positionX(skills.length) - 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">X</text>
         <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) + 30" :cy="positionY(skills.length) + 65" fill="green"></circle>
         <text @click="addCircle" text-anchor="middle" :x="positionX(skills.length) + 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">✔</text>
         <CloseCross v-show="showCross" style="cursor: pointer;"@click="removeLink(selectedlink)":x1="linkPositionX()" :y1="linkPositionY()"></CloseCross>
@@ -49,7 +49,7 @@
         },
         skills: [],
         selectedlink: '',
-        label: '',
+        label: 'Nouvelle',
         newSkillClicked:false,
         showCross : false,
         text: [],
@@ -144,12 +144,12 @@
         return this.posY + Math.floor((integ) / 8) * 150;
       },
       addCircle() {
-        if(this.label != '') {
+        if(this.label != '' && this.label != 'Nouvelle') {
           this.addSkill();
           this.text.push(this.text1);
           this.newSkillClicked = false;
           this.numberOfCircle++;
-          this.label = "";
+          this.label = 'Nouvelle';
         }
       },
       addSkill(){
