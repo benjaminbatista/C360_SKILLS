@@ -364,7 +364,7 @@
           }
         };
 
-        this.post("http://localhost:8083/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
+        this.post(config.server+"/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
       },
 
       verifyUserToConnectByDatabase(){
@@ -384,7 +384,7 @@
           redirectDependingOnRole(userPersistedToken);
         };
 
-        this.post("http://localhost:8083/api/user", this.userToConnect, connectUser);
+        this.post(config.server+"api/user", this.userToConnect, connectUser);
       },
 
       verifyForm (){

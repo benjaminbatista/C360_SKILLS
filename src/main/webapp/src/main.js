@@ -4,8 +4,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import store from '@/stores/indexStore'
-import router from './router/index.js'
+import router from './config/router.js'
 import Dropdown from 'vue-js-dropdown'
+import config from './config/config.js'
 require('jwt-decode');
 require('../node_modules/bootstrap/dist/css/bootstrap.css');
 
@@ -19,5 +20,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  config,
   template: `<div><router-view></router-view></div>`
 });
