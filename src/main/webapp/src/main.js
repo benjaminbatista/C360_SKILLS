@@ -2,18 +2,15 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from './config/router.js'
 import store from './vuex/store'
 import router from './config/router.js'
 import Dropdown from 'vue-js-dropdown'
 import config from './config/config.js'
-require('jwt-decode');
+//require('jwt-decode');
 require('../node_modules/bootstrap/dist/css/bootstrap.css');
 
 Vue.use(Vuex);
-Vue.use(axios);
 Vue.use(Dropdown);
-Vue.use(VueResource);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

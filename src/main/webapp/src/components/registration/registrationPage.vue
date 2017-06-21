@@ -365,7 +365,7 @@
             this.emailAlreadyExist = true;
           }
         };
-        axios.post('http://localhost:8086/api/collaborateurs',
+        axios.post(config.server +'/api/collaborateurs',
               this.collaboratorToRegister,sendUserToRegisterSuccess, sendUserToRegisterError )
          .then( function (response){
              console.log('saved successfly');
@@ -389,13 +389,10 @@
           redirectDependingOnRole(userPersistedToken);
         };
 
-        axios.post("http://localhost:8086/api/user", this.userToConnect, connectUser)
+        axios.post(config.server +"/api/user", this.userToConnect, connectUser)
           .then( function (response){
             console.log('success');
           });
-      },
-
-        this.post(config.server+"/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
       },
 
       verifyUserToConnectByDatabase(){
@@ -415,7 +412,7 @@
           redirectDependingOnRole(userPersistedToken);
         };
 
-        this.post(config.server+"api/user", this.userToConnect, connectUser);
+        axios.post(config.server+"api/user", this.userToConnect, connectUser);
       },
 
       verifyForm (){
@@ -442,5 +439,5 @@
       },
       }
     }
-  }
+
 </script>
