@@ -111,6 +111,7 @@
   import customInput from '../customInput/customInput.vue'
   import passwordInput from '../customInput/passwordInput.vue'
   import config from '../../config/config'
+  import axios from 'axios'
 
   export default {
 
@@ -189,7 +190,6 @@
       }
     },
     methods: {
-
       isErrorLogin() {
         return !this.isLoginValid && !this.loginEmpty;
       },
@@ -365,12 +365,11 @@
             this.emailAlreadyExist = true;
           }
         };
-        axios.post(config.server + '/api/collaborateurs',
+        axios.post('http://localhost:8086/api/collaborateurs',
               this.collaboratorToRegister,sendUserToRegisterSuccess, sendUserToRegisterError )
          .then( function (response){
              console.log('saved successfly');
         });
-
       },
 
       verifyUserToConnectByDatabase(){
@@ -390,7 +389,10 @@
           redirectDependingOnRole(userPersistedToken);
         };
 
-        axios.post(config.server + "/api/user", this.userToConnect, connectUser);
+        axios.post("http://localhost:8086/api/user", this.userToConnect, connectUser)
+          .then( function (response){
+            console.log('success');
+          });
       },
 
         this.post(config.server+"/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
@@ -438,6 +440,7 @@
           this.addCollaborator();
         }
       },
+      }
     }
   }
 </script>
