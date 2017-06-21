@@ -9,19 +9,21 @@
           <line  @mouseover="selectedlink = link;showCross = true;" :x1="getPositionXById(link.skill1.id)"
                 :y1="getPositionYById(link.skill1.id)"
                 :x2="getPositionXById(link.skill2.id)"
-                :y2="getPositionYById(link.skill2.id)" style="stroke:black;stroke-width:3"/>
+                :y2="getPositionYById(link.skill2.id)" style="stroke:rgba(0,0,0,0.52);stroke-width:3"/>
         </g>
         <g v-for="(skill,i) in skills">
-          <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label"
+          <customCircle :id="skill.id" :cx="positionX(i)" :cy="positionY(i)" :content="skill.label" stroke="red" fill="white"
                         @click="selectSkill(skill)"/>
         </g>
-        <customCircle @click="newSkillClicked = true":cx="positionX(skills.length)" :cy="positionY(skills.length)" content="Nouvelle"/>
-        <foreignObject v-show="newSkillClicked" :x="positionX(skills.length) - 47" :y="positionY(skills.length)-5">
+        <customCircle @click="newSkillClicked = true":cx="positionX(skills.length)" :cy="positionY(skills.length)" content="Nouvelle" stroke="green" fill="white"/>
+        <foreignObject v-show="newSkillClicked" :x="positionX(skills.length) - 46" :y="positionY(skills.length)-7">
           <div xmlns="http://www.w3.org/1999/xhtml">
-            <input style="width: 90px;text-align:center;" maxlength="10" type="text" v-model="label"/>
+            <form @submit.prevent="addCircle">
+            <input style="width: 88px;text-align:center; border-color: rgba(0,0,0,0.52);" maxlength="10" type="text" v-model="label"/>
+            </form>
           </div>
         </foreignObject>
-        <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) - 30" :cy="positionY(skills.length) + 65" fill="red"></circle>
+        <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) - 30" :cy="positionY(skills.length) + 65" fill="orange"></circle>
         <text @click="newSkillClicked = false" text-anchor="middle" :x="positionX(skills.length) - 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">X</text>
         <circle style="cursor: pointer" r="10" :cx="positionX(skills.length) + 30" :cy="positionY(skills.length) + 65" fill="green"></circle>
         <text @click="addCircle" text-anchor="middle" :x="positionX(skills.length) + 30"  :y="positionY(skills.length) + 70" style="fill: white;cursor: pointer">✔</text>

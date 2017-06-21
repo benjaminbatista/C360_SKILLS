@@ -1,7 +1,7 @@
 <template>
   <g>
-    <circle @click="handleClick()" :id="cx+''+cy" :cx="cx" :cy="cy" r="50" fill="#09aa76" stroke="#075338" stroke-width="2"></circle>
-    <text @click="handleClick()" text-anchor="middle" :x="cx" :class="mySize" :y="cy+8" style="fill: #fff;">{{content}}</text>
+    <circle @click="handleClick()" :id="cx+''+cy" :cx="cx" :cy="cy" r="50" :fill="fill" :stroke="stroke" stroke-width="2"></circle>
+    <text @click="handleClick()" text-anchor="middle" :x="cx" :class="mySize" :y="cy+8" style="fill: rgba(0,0,0,0.52);">{{content}}</text>
   </g>
 </template>
 
@@ -9,7 +9,7 @@
   import store from "../stores/indexStore"
 
   export default {
-    props:["cx","cy", "content"],
+    props:["cx","cy", "content","fill","stroke"],
     data () {
       return {
         cx1: "",
