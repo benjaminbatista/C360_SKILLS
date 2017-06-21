@@ -4,6 +4,8 @@
       <h1>Spike SVG</h1></div>
 
     <div class="svg-content" id="test">
+      <b class="mybstyle">Administration des compétences</b>
+      <hr class="myhrline">
       <svg version="1.1" viewBox="0 0 1250 1250" preserveAspectRatio="xMinYMin meet">
         <g v-for="link in links">
           <line  @mouseover="selectedlink = link;showCross = true;" :x1="getPositionXById(link.skill1.id)"
@@ -226,6 +228,17 @@
 
   .test {
     animation: mymove 0.5s 1;
+  }
+
+  hr.myhrline{
+    border-top: 1px solid #8c8b8b;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  b.mybstyle {
+    margin-left: 50px;
+    margin-right: 50px;
   }
 
   @keyframes mymove {
