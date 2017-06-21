@@ -54,7 +54,7 @@
         <div class="row">
           <div class="col-xs-12 col-xm-12 col-md-12 cold-lg-12 ">
             <button ref="submitConnexion" type="submit" name="register-submit" id="register-submit"
-                    tabindex="4" class="form-control btn btn-primary" @click="sendInformationToCookie()">Se connecter
+                    tabindex="4" class="form-control btn btn-primary"  @click="sendInformationToCookie()">Se connecter
             </button>
           </div>
         </div>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
       name: 'connexion-form',
     data(){
@@ -82,7 +83,7 @@
           stayConnected: true,
           showPopup: false,
           border: 'color-red',
-          allUsers: undefined,
+          allUsers: [],
           isNotNewEmail: true,
           emailToSend: '',
           passwordToSend: '',
@@ -155,13 +156,15 @@
           this.isErrorAuthentification = true;
         };
 
-        this.post(config.server+"api/user", this.userToRegister, connectUserSuccess, connectUserError);
+        axios.post("http://localhost:8086/api/user", this.userToRegister, connectUserSuccess, connectUserError);
       },
 
       gatherUsersFromDatabaseToVerify(){
-        this.$http.get(config.server+"api/collaborateurs").then(
+          let self = this;
+        axios.get("http://localhost:8086/api/collaborateurs").then(
           function (response) {
-            this.allUsers = response.data;
+           self.allUsers = response.data;
+            console.log("la repéonse" + response.data);
           },
           function (response) {
             console.log("Error: ", response);
@@ -169,11 +172,11 @@
           }
         ).then(
           function () {
-            this.VerifyEmailFromDatabase();
-            this.isErrorAuthentification = false;
-            if (this.isNotNewEmail == true) {
-              var self = this;
-              this.post(config.server+"api/sendemail/" + this.idToSend);
+            self.VerifyEmailFromDatabase();
+            self.isErrorAuthentification = false;
+            if (self.isNotNewEmail == true) {
+              let self = this;
+              axios.post("http://localhost:8086/api/sendemail/", self.idToSend);
               this.showPopup = true;
               setTimeout(function () {
                 self.showPopup = false;
@@ -184,9 +187,10 @@
       },
 
       sendInformationToCookie(){
-        this.$http.get(config.server+"api/collaborateurs").then(
+        let self = this;
+        axios.get("http://localhost:8086/api/collaborateurs").then(
           function (response) {
-            this.allUsers = response.data;
+            self.allUsers = response.data;
           },
           function (response) {
             console.log("Error: ", response);
@@ -194,31 +198,32 @@
           }
         ).then(
           function () {
-            for (let tmp in this.allUsers) {
-              if (this.email == this.allUsers[tmp].email) {
-                this.emailToSend = this.allUsers[tmp].email;
-                this.passwordToSend = this.allUsers[tmp].password;
-                this.idToSend = this.allUsers[tmp].id;
-                this.lastNameToSend = this.allUsers[tmp].lastName;
-                this.firstNameToSend = this.allUsers[tmp].firstName;
-                this.isNotNewEmail = true;
+            for (let tmp in self.allUsers) {
+              if (self.email == self.allUsers[tmp].email) {
+                self.emailToSend = self.allUsers[tmp].email;
+                self.passwordToSend = self.allUsers[tmp].password;
+                self.idToSend = self.allUsers[tmp].id;
+                self.lastNameToSend = self.allUsers[tmp].lastName;
+                self.firstNameToSend = self.allUsers[tmp].firstName;
+                self.isNotNewEmail = true;
                 break;
               }
             }
           }
         )
-      },
+     },
 
       VerifyEmailFromDatabase(){
-        this.isNotNewEmail = false;
-        for (var tmp in this.allUsers) {
-          if (this.email == this.allUsers[tmp].email) {
-            this.emailToSend = this.allUsers[tmp].email;
-            this.passwordToSend = this.allUsers[tmp].password;
-            this.idToSend = this.allUsers[tmp].id;
-            this.lastNameToSend = this.allUsers[tmp].lastName;
-            this.firstNameToSend = this.allUsers[tmp].firstName;
-            this.isNotNewEmail = true;
+        let self = this;
+        self.isNotNewEmail = false;
+        for (var tmp in self.allUsers) {
+          if (self.email == self.allUsers[tmp].email) {
+            self.emailToSend = self.allUsers[tmp].email;
+            self.passwordToSend = self.allUsers[tmp].password;
+            self.idToSend = self.allUsers[tmp].id;
+            self.lastNameToSend = self.allUsers[tmp].lastName;
+            self.firstNameToSend = self.allUsers[tmp].firstName;
+            self.isNotNewEmail = self;
             break;
           }
         }
