@@ -54,7 +54,7 @@
         <div class="row">
           <div class="col-xs-12 col-xm-12 col-md-12 cold-lg-12 ">
             <button ref="submitConnexion" type="submit" name="register-submit" id="register-submit"
-                    tabindex="4" class="form-control btn btn-primary"  @click="sendInformationToCookie()">Se connecter
+                    tabindex="4" class="form-control btn btn-primary" @click="sendInformationToCookie()">Se connecter
             </button>
           </div>
         </div>
@@ -64,7 +64,9 @@
 </template>
 
 <script>
+  import config from '../../config/config'
   import axios from 'axios'
+
   export default {
       name: 'connexion-form',
     data(){
@@ -156,12 +158,12 @@
           this.isErrorAuthentification = true;
         };
 
-        axios.post("http://localhost:8086/api/user", this.userToRegister, connectUserSuccess, connectUserError);
+        axios.post(config.server + "/api/user", this.userToRegister, connectUserSuccess, connectUserError);
       },
 
       gatherUsersFromDatabaseToVerify(){
           let self = this;
-        axios.get("http://localhost:8086/api/collaborateurs").then(
+        axios.get(config.server + "/api/collaborateurs").then(
           function (response) {
            self.allUsers = response.data;
             console.log("la repéonse" + response.data);
@@ -176,7 +178,7 @@
             self.isErrorAuthentification = false;
             if (self.isNotNewEmail == true) {
               let self = this;
-              axios.post("http://localhost:8086/api/sendemail/", self.idToSend);
+              axios.post(config.server +"/api/sendemail/", self.idToSend);
               this.showPopup = true;
               setTimeout(function () {
                 self.showPopup = false;
@@ -188,7 +190,7 @@
 
       sendInformationToCookie(){
         let self = this;
-        axios.get("http://localhost:8086/api/collaborateurs").then(
+        axios.get(config.server + "/api/collaborateurs").then(
           function (response) {
             self.allUsers = response.data;
           },

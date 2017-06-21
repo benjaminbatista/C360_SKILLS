@@ -110,9 +110,10 @@
 <script>
   import customInput from '../customInput/customInput.vue'
   import passwordInput from '../customInput/passwordInput.vue'
-  import axios from 'axios'
+  import config from '../../config/config'
 
   export default {
+
       name: 'inscription-form',
     components: { customInput: customInput, customPasswordInput: passwordInput },
     data() {
@@ -188,6 +189,7 @@
       }
     },
     methods: {
+
       isErrorLogin() {
         return !this.isLoginValid && !this.loginEmpty;
       },
@@ -363,7 +365,7 @@
             this.emailAlreadyExist = true;
           }
         };
-        axios.post('http://localhost:8086/api/collaborateurs',
+        axios.post(config.server + '/api/collaborateurs',
               this.collaboratorToRegister,sendUserToRegisterSuccess, sendUserToRegisterError )
          .then( function (response){
              console.log('saved successfly');
@@ -388,10 +390,7 @@
           redirectDependingOnRole(userPersistedToken);
         };
 
-        axios.post("http://localhost:8086/api/user", this.userToConnect, connectUser)
-          .then( function (response){
-            console.log('success');
-          });
+        axios.post(config.server + "/api/user", this.userToConnect, connectUser);
       },
 
         this.post(config.server+"/api/collaborateurs/", this.collaboratorToRegister, sendUserToRegisterSuccess, sendUserToRegisterError)
@@ -439,26 +438,6 @@
           this.addCollaborator();
         }
       },
-      post: function(url,data,success,error){
-        if (!error) {
-          error = (response) => {
-            console.log("Error: ", response);
-            console.error(response);
-          }
-        }
-        this.$http.post(url, data)
-          .then(success, error);
-      },
-
-      get: function (url, success, error) {
-        this.$http.get(url)
-          .then(success, error);
-      },
-
-      put: function (url, data, success, error) {
-        this.$http.put(url,data)
-          .then(success, error);
-      }
     }
   }
 </script>
